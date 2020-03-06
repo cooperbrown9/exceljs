@@ -1,12 +1,12 @@
 {
-  "name": "exceljs",
+  "name": "sprout-exceljs",
   "version": "3.6.1",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
   "author": {
-    "name": "Guyon Roche",
-    "email": "guyon@live.com"
+    "name": "Cooper Brown",
+    "email": "cooperbrown9e@gmail.com"
   },
   "repository": {
     "type": "git",
