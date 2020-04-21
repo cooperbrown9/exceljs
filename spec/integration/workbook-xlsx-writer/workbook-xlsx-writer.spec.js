@@ -48,7 +48,11 @@ describe('WorkbookWriter', () => {
       };
       const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
       const ws = wb.addWorksheet('Hello');
-      ws.getCell('A1').value = {formula: 'ROW()+COLUMN()', ref: 'A1:B2', result: 2};
+      ws.getCell('A1').value = {
+        formula: 'ROW()+COLUMN()',
+        ref: 'A1:B2',
+        result: 2,
+      };
       ws.getCell('B1').value = {sharedFormula: 'A1', result: 3};
       ws.getCell('A2').value = {sharedFormula: 'A1', result: 3};
       ws.getCell('B2').value = {sharedFormula: 'A1', result: 4};
@@ -392,7 +396,7 @@ describe('WorkbookWriter', () => {
         filename: TEST_XLSX_FILE_NAME,
         useStyles: true,
         zip: {
-          zlib: {level: 9},// Sets the compression level.
+          zlib: {level: 9}, // Sets the compression level.
         },
       };
       const wb = testUtils.createTestBook(
@@ -424,7 +428,12 @@ describe('WorkbookWriter', () => {
       const note = {
         texts: [
           {
-            font: {size: 12, color: {argb: 'FFFF6600'}, name: 'Calibri', scheme: 'minor'},
+            font: {
+              size: 12,
+              color: {argb: 'FFFF6600'},
+              name: 'Calibri',
+              scheme: 'minor',
+            },
             text: 'seven',
           },
         ],
@@ -459,6 +468,33 @@ describe('WorkbookWriter', () => {
       ws.getCell('A1').value = 'Hello, World!';
       ws.addBackgroundImage(imageId);
 
+      await wb.commit();
+
+      const wb2 = new ExcelJS.Workbook();
+      await wb2.xlsx.readFile(TEST_XLSX_FILE_NAME);
+      const ws2 = wb2.getWorksheet('Hello');
+
+      const backgroundId2 = ws2.getBackgroundImageId();
+      const image = wb2.getImage(backgroundId2);
+      const imageData = await fsReadFileAsync(IMAGE_FILENAME);
+      expect(Buffer.compare(imageData, image.buffer)).to.equal(0);
+    });
+
+    it('with background image where worksheet is commited in advance', async () => {
+      const options = {
+        filename: TEST_XLSX_FILE_NAME,
+      };
+      const wb = new ExcelJS.stream.xlsx.WorkbookWriter(options);
+      const ws = wb.addWorksheet('Hello');
+
+      const imageId = wb.addImage({
+        filename: IMAGE_FILENAME,
+        extension: 'jpeg',
+      });
+      ws.getCell('A1').value = 'Hello, World!';
+      ws.addBackgroundImage(imageId);
+
+      await ws.commit();
       await wb.commit();
 
       const wb2 = new ExcelJS.Workbook();

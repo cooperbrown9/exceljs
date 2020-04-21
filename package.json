@@ -1,6 +1,6 @@
 {
   "name": "sprout-exceljs",
-  "version": "3.6.1",
+  "version": "3.8.1",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/exceljs/exceljs.git"
+    "url": "https://github.com/cooperbrown9/exceljs.git"
   },
   "engines": {
     "node": ">=8.3.0"
@@ -41,12 +41,14 @@
     "test:end-to-end:es5": "export EXCEL_BUILD=es5 && npm run test:end-to-end",
     "test:dist": "mocha --require spec/config/setup spec/dist --recursive",
     "test:manual": "node spec/manual/app.js",
+    "test:typescript": "mocha -r ts-node/register spec/typescript/**/*.spec.ts",
     "clean-build": "npm run clean && npm run build",
     "lint": "eslint --format node_modules/eslint-friendly-formatter .",
-    "lint:fix": "prettier-eslint --write \"**/*.js\"",
+    "lint:fix": "prettier-eslint --write $(pwd)'/**/*.js'",
     "lint:staged": "lint-staged",
     "clean": "rm -rf build/ && rm -rf dist",
     "patch:fast-csv": "node _patch-fast-csv.js",
+    "benchmark": "node --expose-gc benchmark",
     "build": "npm run patch:fast-csv && grunt build",
     "preversion": "npm run clean && npm run build && npm run test:all && npm run test:dist",
     "postversion": "git push --no-verify && git push --tags --no-verify"
@@ -58,6 +60,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier-eslint --write",
       "eslint --format node_modules/eslint-friendly-formatter",
       "git add"
     ]
@@ -92,7 +95,8 @@
     "dayjs": "^1.8.15",
     "fast-csv": "^3.4.0",
     "jszip": "^3.1.5",
-    "sax": "^1.2.4",
+    "proxyquire": "^2.1.3",
+    "saxes": "5.0.0-rc.2",
     "tmp": "^0.1.0",
     "unzipper": "^0.9.12",
     "uuid": "^3.3.3"
@@ -101,6 +105,8 @@
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
+    "@types/chai": "^4.2.7",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^10.12.0",
     "babelify": "^10.0.0",
     "browserify": "^16.5.0",
@@ -121,7 +127,7 @@
     "grunt-browserify": "^5.3.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jasmine": "^2.1.0",
-    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-terser": "^1.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.5",
@@ -132,6 +138,7 @@
     "regenerator-runtime": "^0.13.3",
     "request": "^2.88.0",
     "semver": "^5.6.0",
-    "uglify-js": "^3.4.9"
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
   }
 }
