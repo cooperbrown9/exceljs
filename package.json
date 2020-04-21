@@ -1,6 +1,6 @@
 {
   "name": "sprout-exceljs",
-  "version": "3.8.5",
+  "version": "3.8.7",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
@@ -13,7 +13,7 @@
     "url": "https://github.com/cooperbrown9/exceljs.git"
   },
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=8.2.0"
   },
   "main": "./lib/exceljs.nodejs.js",
   "browser": "./dist/exceljs.min.js",
