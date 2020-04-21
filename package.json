@@ -1,6 +1,6 @@
 {
   "name": "sprout-exceljs",
-  "version": "3.8.4",
+  "version": "3.8.5",
   "description": "Excel Workbook Manager - Read and Write xlsx and csv Files.",
   "private": false,
   "license": "MIT",
